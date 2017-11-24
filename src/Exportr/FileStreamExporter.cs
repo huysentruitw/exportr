@@ -47,7 +47,7 @@ namespace Exportr
         {
             var name = _task.Name;
             if (string.IsNullOrEmpty(name)) throw new InvalidOperationException("Failed to get the name of the export task");
-            var extension = _task.FileExtension ?? string.Empty;
+            var extension = _documentFactory.FileExtension ?? string.Empty;
             if (!extension.StartsWith(".")) extension = $".{extension}";
             return $"{FileNameEncode(name)} {DateTime.Now:yyyyMMdd}{extension}";
         }

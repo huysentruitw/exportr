@@ -45,6 +45,11 @@ namespace Exportr.OpenXml
         }
 
         /// <summary>
+        /// Gets the file extension .xlsx to use when the output is a file.
+        /// </summary>
+        public string FileExtension => ".xlsx";
+
+        /// <summary>
         /// Creates a document for writing to an Excel stream.
         /// </summary>
         /// <param name="stream">The stream to write to.</param>

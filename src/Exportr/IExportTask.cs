@@ -29,11 +29,6 @@ namespace Exportr
         string Name { get; }
 
         /// <summary>
-        /// Gets the file extension to use when the output is a file. (used by <see cref="FileStreamExporter"/> to generate a filename.
-        /// </summary>
-        string FileExtension { get; }
-
-        /// <summary>
         /// Enumerates all available sheet export tasks for the current export task.
         /// </summary>
         /// <returns>Enumeration of sheet export tasks</returns>

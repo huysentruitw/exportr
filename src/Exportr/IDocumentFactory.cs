@@ -24,6 +24,11 @@ namespace Exportr
     public interface IDocumentFactory
     {
         /// <summary>
+        /// Gets the file extension to use when the output is a file. (used by <see cref="FileStreamExporter"/> to generate a filename.
+        /// </summary>
+        string FileExtension { get; }
+
+        /// <summary>
         /// Creates a document for writing to a stream.
         /// </summary>
         /// <param name="stream">The stream to write to.</param>
