@@ -4,6 +4,11 @@
 
 Classes and interfaces for building a worksheet based export. Contains an OpenXml implementation.
 
+## Get it on [NuGet](https://www.nuget.org/packages/Exportr.OpenXml/)
+
+    PM> Install-Package Exportr
+    PM> Install-Package Exportr.OpenXml
+
 ## Example
 
 ### ApiController
