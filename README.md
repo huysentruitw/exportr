@@ -50,7 +50,7 @@ public class ExportController : ApiController
 }
 ```
 
-### BookExportTask
+### LibraryExportTask
 
 ```csharp
 public class LibraryExportTask : IExportTask
@@ -102,9 +102,9 @@ public class BookSheetExportTask : ISheetExportTask
 
 ## InlineSheetExportTask
 
-A generic implementation that can be used to create a ISheetExportTask inline.
+A generic implementation that can be used to create a `ISheetExportTask` inline.
 
-By using this class, the above example could be rewritten as:
+By using this class, the above `LibraryExportTask` and `BookSheetExportTask` could be rewritten as:
 
 ```csharp
 public class LibraryExportTask : IExportTask
