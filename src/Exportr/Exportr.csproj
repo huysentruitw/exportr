@@ -6,7 +6,7 @@
     <Authors>Wouter Huysentruit</Authors>
     <Company>Huysentruit</Company>
     <Product>Exportr</Product>
-    <Copyright>Copyright © 2017 Wouter Huysentruit</Copyright>
+    <Copyright>Copyright © 2018 Wouter Huysentruit</Copyright>
     <AssemblyName>Exportr</AssemblyName>
     <PackageId>Exportr</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
@@ -14,7 +14,7 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/huysentruitw/exportr/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/huysentruitw/exportr</RepositoryUrl>
-    <TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net471;netstandard2.0</TargetFrameworks>
     <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard2.0' ">2.0.0</NetStandardImplicitPackageVersion>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -34,8 +34,8 @@
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net462|AnyCPU'">
-    <DocumentationFile>bin\Debug\net462\Exportr.xml</DocumentationFile>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net471|AnyCPU'">
+    <DocumentationFile>bin\Debug\net471\Exportr.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
   </PropertyGroup>
