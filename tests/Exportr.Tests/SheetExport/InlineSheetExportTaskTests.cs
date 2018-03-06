@@ -128,6 +128,108 @@ namespace Exportr.Tests.SheetExport
             Assert.That(data[1][6], Is.EqualTo(1));
         }
 
+        [Test]
+        public void MultiParse_AdditionalData_DuplicateColumnNames_ShouldExportDuplicateColumnNames()
+        {
+            var task = InlineSheetExportTask<SomeEntityModel, SomeRowData>.MultiParse("SomeName", () => new[]
+            {
+                new SomeEntityModel { Title = "Title1", Description = "DescriptionA" },
+                new SomeEntityModel { Title = "Title2", Description = "DescriptionB" },
+            }, entity => new[]
+            {
+                new SomeRowData
+                {
+                    Title = entity.Title,
+                    Description = entity.Description,
+                    OrderA = "aa",
+                    OrderB = "bb",
+                    OrderC = "cc",
+                    AdditionalValues = new object[] { true, 1 }
+                },
+            }, new[] { "OrderA", "OrderB" });
+
+            var columns = task.GetColumnLabels();
+            Assert.That(columns, Has.Length.EqualTo(7));
+            Assert.That(columns[0], Is.EqualTo("Title"));
+            Assert.That(columns[1], Is.EqualTo("Description"));
+            Assert.That(columns[2], Is.EqualTo("OrderC"));
+            Assert.That(columns[3], Is.EqualTo("OrderA"));
+            Assert.That(columns[4], Is.EqualTo("OrderB"));
+            Assert.That(columns[5], Is.EqualTo("OrderA"));
+            Assert.That(columns[6], Is.EqualTo("OrderB"));
+
+            var data = task.EnumRowData().ToArray();
+            Assert.That(data, Has.Length.EqualTo(2));
+            Assert.That(data[0], Has.Length.EqualTo(7));
+            Assert.That(data[0][0], Is.EqualTo("Title1"));
+            Assert.That(data[0][1], Is.EqualTo("DescriptionA"));
+            Assert.That(data[0][2], Is.EqualTo("cc"));
+            Assert.That(data[0][3], Is.EqualTo("aa"));
+            Assert.That(data[0][4], Is.EqualTo("bb"));
+            Assert.That(data[0][5], Is.EqualTo(true));
+            Assert.That(data[0][6], Is.EqualTo(1));
+
+            Assert.That(data[1], Has.Length.EqualTo(7));
+            Assert.That(data[1][0], Is.EqualTo("Title2"));
+            Assert.That(data[1][1], Is.EqualTo("DescriptionB"));
+            Assert.That(data[1][2], Is.EqualTo("cc"));
+            Assert.That(data[1][3], Is.EqualTo("aa"));
+            Assert.That(data[1][4], Is.EqualTo("bb"));
+            Assert.That(data[1][5], Is.EqualTo(true));
+            Assert.That(data[1][6], Is.EqualTo(1));
+        }
+
+        [Test]
+        public void MultiParse_AdditionalData_DuplicateColumnValues_ShouldExportDuplicateValues()
+        {
+            var task = InlineSheetExportTask<SomeEntityModel, SomeRowData>.MultiParse("SomeName", () => new[]
+{
+                new SomeEntityModel { Title = "Title1", Description = "DescriptionA" },
+                new SomeEntityModel { Title = "Title2", Description = "DescriptionB" },
+            }, entity => new[]
+            {
+                new SomeRowData
+                {
+                    Title = entity.Title,
+                    Description = entity.Description,
+                    OrderA = "aa",
+                    OrderB = "aa",
+                    OrderC = "cc",
+                    AdditionalValues = new object[] { "cc", "aa" }
+                },
+            }, new[] { "OrderA", "OrderB" });
+
+            var columns = task.GetColumnLabels();
+            Assert.That(columns, Has.Length.EqualTo(7));
+            Assert.That(columns[0], Is.EqualTo("Title"));
+            Assert.That(columns[1], Is.EqualTo("Description"));
+            Assert.That(columns[2], Is.EqualTo("OrderC"));
+            Assert.That(columns[3], Is.EqualTo("OrderA"));
+            Assert.That(columns[4], Is.EqualTo("OrderB"));
+            Assert.That(columns[5], Is.EqualTo("OrderA"));
+            Assert.That(columns[6], Is.EqualTo("OrderB"));
+
+            var data = task.EnumRowData().ToArray();
+            Assert.That(data, Has.Length.EqualTo(2));
+            Assert.That(data[0], Has.Length.EqualTo(7));
+            Assert.That(data[0][0], Is.EqualTo("Title1"));
+            Assert.That(data[0][1], Is.EqualTo("DescriptionA"));
+            Assert.That(data[0][2], Is.EqualTo("cc"));
+            Assert.That(data[0][3], Is.EqualTo("aa"));
+            Assert.That(data[0][4], Is.EqualTo("aa"));
+            Assert.That(data[0][5], Is.EqualTo("cc"));
+            Assert.That(data[0][6], Is.EqualTo("aa"));
+
+            Assert.That(data[1], Has.Length.EqualTo(7));
+            Assert.That(data[1][0], Is.EqualTo("Title2"));
+            Assert.That(data[1][1], Is.EqualTo("DescriptionB"));
+            Assert.That(data[1][2], Is.EqualTo("cc"));
+            Assert.That(data[1][3], Is.EqualTo("aa"));
+            Assert.That(data[1][4], Is.EqualTo("aa"));
+            Assert.That(data[1][5], Is.EqualTo("cc"));
+            Assert.That(data[1][6], Is.EqualTo("aa"));
+        }
+
         private class SomeEntityModel
         {
             public string Title { get; set; }

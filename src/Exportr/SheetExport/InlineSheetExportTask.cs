@@ -104,7 +104,7 @@ namespace Exportr.SheetExport
         /// Gets the column labels of the sheet.
         /// </summary>
         /// <returns>The column labels of the sheet.</returns>
-        public string[] GetColumnLabels() => _orderedColumnInfos.Select(x => x.Name).Union(_additionalColumnNames).ToArray();
+        public string[] GetColumnLabels() => _orderedColumnInfos.Select(x => x.Name).Concat(_additionalColumnNames).ToArray();
 
         /// <summary>
         /// Gets the row data of the sheet.
@@ -120,7 +120,7 @@ namespace Exportr.SheetExport
                         var additionalValues = rowData.AdditionalValues ?? Enumerable.Empty<object>();
                         return _orderedColumnInfos
                             .Select(columnInfo => columnInfo.PropertyInfo.GetValue(rowData))
-                            .Union(additionalValues)
+                            .Concat(additionalValues)
                             .ToArray();
                     });
                 });
