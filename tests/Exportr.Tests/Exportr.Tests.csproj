@@ -51,6 +51,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileStreamExporterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SheetExport\ColumnAttributeTests.cs" />
     <Compile Include="SheetExport\InlineSheetExportTaskTests.cs" />

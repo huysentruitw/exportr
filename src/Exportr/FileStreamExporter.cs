@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+ 
 using System;
 using System.IO;
 using System.Linq;
@@ -27,6 +27,7 @@ namespace Exportr
     {
         private readonly IDocumentFactory _documentFactory;
         private readonly IExportTask _task;
+        private readonly Func<DateTime> _nowFactory;
 
         /// <summary>
         /// Constructs a new <see cref="FileStreamExporter"/> instance.
@@ -34,9 +35,15 @@ namespace Exportr
         /// <param name="documentFactory">The export document factory.</param>
         /// <param name="task">The export task.</param>
         public FileStreamExporter(IDocumentFactory documentFactory, IExportTask task)
+            : this(documentFactory, task, () => DateTime.Now)
+        {
+        }
+
+        internal FileStreamExporter(IDocumentFactory documentFactory, IExportTask task, Func<DateTime> nowFactory)
         {
             _documentFactory = documentFactory ?? throw new ArgumentNullException(nameof(documentFactory));
             _task = task ?? throw new ArgumentNullException(nameof(task));
+            _nowFactory = nowFactory ?? throw new ArgumentNullException(nameof(nowFactory));
         }
 
         /// <summary>
@@ -48,8 +55,8 @@ namespace Exportr
             var name = _task.Name;
             if (string.IsNullOrEmpty(name)) throw new InvalidOperationException("Failed to get the name of the export task");
             var extension = _documentFactory.FileExtension ?? string.Empty;
-            if (!extension.StartsWith(".")) extension = $".{extension}";
-            return $"{FileNameEncode(name)} {DateTime.Now:yyyyMMdd}{extension}";
+            if (extension.Any() && !extension.StartsWith(".")) extension = $".{extension}";
+            return $"{FileNameEncode(name)} {_nowFactory():yyyyMMdd}{extension}";
         }
 
         /// <summary>
