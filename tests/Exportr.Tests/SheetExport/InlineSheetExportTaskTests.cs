@@ -25,6 +25,14 @@ namespace Exportr.Tests.SheetExport
         }
 
         [Test]
+        public void SingleParse_PassName_ShouldSetNameOnProperty()
+        {
+            var name = Guid.NewGuid().ToString("N");
+            var task = InlineSheetExportTask<SomeEntityModel, SomeRowData>.SingleParse(name, Enumerable.Empty<SomeEntityModel>, _ => new SomeRowData());
+            Assert.That(task.Name, Is.EqualTo(name));
+        }
+
+        [Test]
         public void MultiParse_InvalidArguments_ShouldThrowException()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => InlineSheetExportTask<SomeEntityModel, SomeRowData>.MultiParse(null, Enumerable.Empty<SomeEntityModel>, _ => Enumerable.Empty<SomeRowData>()));
@@ -38,6 +46,14 @@ namespace Exportr.Tests.SheetExport
 
             ex = Assert.Throws<ArgumentNullException>(() => InlineSheetExportTask<SomeEntityModel, SomeRowData>.MultiParse("SomeName", Enumerable.Empty<SomeEntityModel>, null));
             Assert.That(ex.ParamName, Is.EqualTo("parseEntity"));
+        }
+
+        [Test]
+        public void MultiParse_PassName_ShouldSetNameOnProperty()
+        {
+            var name = Guid.NewGuid().ToString("N");
+            var task = InlineSheetExportTask<SomeEntityModel, SomeRowData>.MultiParse(name, Enumerable.Empty<SomeEntityModel>, _ => Enumerable.Empty<SomeRowData>());
+            Assert.That(task.Name, Is.EqualTo(name));
         }
 
         [Test]
