@@ -47,7 +47,10 @@ namespace Exportr.SheetExport
             Func<IEnumerable<TEntity>> fetchEntities,
             Func<TEntity, TRowData> parseEntity,
             IEnumerable<string> additionalColumnNames = null)
-            => new InlineSheetExportTask<TEntity, TRowData>(name, fetchEntities, x => new[] { parseEntity(x) }, additionalColumnNames);
+        {
+            if (parseEntity == null) throw new ArgumentNullException(nameof(parseEntity));
+            return new InlineSheetExportTask<TEntity, TRowData>(name, fetchEntities, x => new[] { parseEntity(x) }, additionalColumnNames);
+        }
 
         /// <summary>
         /// Create a <see cref="InlineSheetExportTask{TEntity,TRowData}"/> instance that produces a variable number of rows for each entity.
