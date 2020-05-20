@@ -11,7 +11,7 @@
     <PackageId>Exportr.OpenXml</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
     <PackageProjectUrl>https://github.com/huysentruitw/exportr</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/huysentruitw/exportr/master/LICENSE</PackageLicenseUrl>
+    <License>Apache</License>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/huysentruitw/exportr</RepositoryUrl>
     <TargetFrameworks>net471;netstandard2.0</TargetFrameworks>
@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.9.0" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.10.1" />
   </ItemGroup>
 
   <ItemGroup>

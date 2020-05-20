@@ -11,7 +11,7 @@
     <PackageId>Exportr</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
     <PackageProjectUrl>https://github.com/huysentruitw/exportr</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/huysentruitw/exportr/master/LICENSE</PackageLicenseUrl>
+    <License>Apache</License>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/huysentruitw/exportr</RepositoryUrl>
     <TargetFrameworks>net471;netstandard2.0</TargetFrameworks>
