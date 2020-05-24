@@ -65,19 +65,15 @@ namespace Exportr
         /// <param name="stream">The stream to write the export to.</param>
         public void ExportToStream(Stream stream)
         {
-            using (var document = _documentFactory.CreateDocument(stream))
+            using var document = _documentFactory.CreateDocument(stream);
+            foreach (var sheetTask in _task.EnumSheetExportTasks())
             {
-                foreach (var sheetTask in _task.EnumSheetExportTasks())
-                {
-                    using (var sheet = document.CreateSheet(sheetTask.Name))
-                    {
-                        sheet.AddHeaderRow(sheetTask.GetColumnLabels());
+                using var sheet = document.CreateSheet(sheetTask.Name);
+                sheet.AddHeaderRow(sheetTask.GetColumnLabels());
 
-                        foreach (var rowData in sheetTask.EnumRowData())
-                        {
-                            sheet.AddRow(rowData);
-                        }
-                    }
+                foreach (var rowData in sheetTask.EnumRowData())
+                {
+                    sheet.AddRow(rowData);
                 }
             }
         }
