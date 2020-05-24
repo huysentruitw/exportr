@@ -100,6 +100,10 @@ public class BookSheetExportTask : ISheetExportTask
 }
 ```
 
+### Formulas
+
+To export a formula in a cell, return f.e. `Formula.Create<int>("=A1*A1")` as the cell value.
+
 ## InlineSheetExportTask
 
 A generic implementation that can be used to create a `ISheetExportTask` inline.

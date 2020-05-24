@@ -46,6 +46,9 @@ namespace Exportr.OpenXml
         /// <returns>A <see cref="Cell"/> object.</returns>
         public Cell Convert(object value)
         {
+            if (value is IFormula formula)
+                return ConvertFormula(formula);
+
             return value switch
             {
                 string text => ToInlineStringCell(text),
@@ -59,7 +62,31 @@ namespace Exportr.OpenXml
                 ulong @ulong => ToNumberCell(@ulong),
                 double @double => ToNumberCell((decimal) @double),
                 decimal @decimal => ToNumberCell(@decimal),
-                _ => new Cell()
+                _ => new Cell(),
+            };
+        }
+
+        private Cell ConvertFormula(IFormula formula)
+        {
+            var dataType = formula.DefaultCellValue switch
+            {
+                string _ => CellValues.String,
+                DateTime _ => CellValues.String,
+                DateTimeOffset _ => CellValues.String,
+                bool _ => CellValues.String,
+                int _ => CellValues.Number,
+                uint _ => CellValues.Number,
+                long _ => CellValues.Number,
+                ulong _ => CellValues.Number,
+                double _ => CellValues.Number,
+                decimal _ => CellValues.Number,
+                _ => CellValues.String,
+            };
+
+            return new Cell
+            {
+                DataType = dataType,
+                CellFormula = new CellFormula(formula.Expression),
             };
         }
 
