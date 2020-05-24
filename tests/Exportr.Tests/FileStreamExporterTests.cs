@@ -28,7 +28,7 @@ namespace Exportr.Tests
             Assert.That(ex.ParamName, Is.EqualTo("documentFactory"));
 
             ex = Assert.Throws<ArgumentNullException>(() => new FileStreamExporter(new Mock<IDocumentFactory>().Object, null));
-            Assert.That(ex.ParamName, Is.EqualTo("task"));
+            Assert.That(ex.ParamName, Is.EqualTo("exportTask"));
         }
 
         [Test]
