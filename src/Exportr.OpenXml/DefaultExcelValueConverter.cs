@@ -46,21 +46,21 @@ namespace Exportr.OpenXml
         /// <returns>A <see cref="Cell"/> object.</returns>
         public Cell Convert(object value)
         {
-            switch (value)
+            return value switch
             {
-                case string text: return ToInlineStringCell(text);
-                case Guid guid: return ToInlineStringCell(guid.ToString());
-                case DateTime dateTime: return ToInlineStringCell(dateTime.ToString(_dateTimeFormat, _formatProvider));
-                case DateTimeOffset dateTimeOffset: return ToInlineStringCell(dateTimeOffset.UtcDateTime.ToString(_dateTimeFormat, _formatProvider));
-                case bool @bool: return ToInlineStringCell(@bool.ToString());
-                case int @int: return ToNumberCell(@int);
-                case uint @uint: return ToNumberCell(@uint);
-                case long @long: return ToNumberCell(@long);
-                case ulong @ulong: return ToNumberCell(@ulong);
-                case double @double: return ToNumberCell((decimal)@double);
-                case decimal @decimal: return ToNumberCell(@decimal);
-                default: return new Cell();
-            }
+                string text => ToInlineStringCell(text),
+                Guid guid => ToInlineStringCell(guid.ToString()),
+                DateTime dateTime => ToInlineStringCell(dateTime.ToString(_dateTimeFormat, _formatProvider)),
+                DateTimeOffset dateTimeOffset => ToInlineStringCell(dateTimeOffset.UtcDateTime.ToString(_dateTimeFormat, _formatProvider)),
+                bool @bool => ToInlineStringCell(@bool.ToString()),
+                int @int => ToNumberCell(@int),
+                uint @uint => ToNumberCell(@uint),
+                long @long => ToNumberCell(@long),
+                ulong @ulong => ToNumberCell(@ulong),
+                double @double => ToNumberCell((decimal) @double),
+                decimal @decimal => ToNumberCell(@decimal),
+                _ => new Cell()
+            };
         }
 
         // ReSharper disable once MemberCanBeMadeStatic.Local
