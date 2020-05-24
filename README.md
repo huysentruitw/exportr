@@ -102,7 +102,7 @@ public class BookSheetExportTask : ISheetExportTask
 
 ### Formulas
 
-To export a formula in a cell, return f.e. `Formula.Create<int>("=A1*A1")` as the cell value.
+To export a formula in a cell, return f.e. `Formula.Create<int>("=A1+A2")` as the cell value.
 
 ## InlineSheetExportTask
 
