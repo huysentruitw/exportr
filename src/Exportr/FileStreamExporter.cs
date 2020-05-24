@@ -27,23 +27,23 @@ namespace Exportr
     public sealed class FileStreamExporter : IFileStreamExporter
     {
         private readonly IDocumentFactory _documentFactory;
-        private readonly IExportTask _task;
+        private readonly IExportTask _exportTask;
         private readonly Func<DateTime> _nowFactory;
 
         /// <summary>
         /// Constructs a new <see cref="FileStreamExporter"/> instance.
         /// </summary>
         /// <param name="documentFactory">The export document factory.</param>
-        /// <param name="task">The export task.</param>
-        public FileStreamExporter(IDocumentFactory documentFactory, IExportTask task)
-            : this(documentFactory, task, () => DateTime.Now)
+        /// <param name="exportTask">The export task.</param>
+        public FileStreamExporter(IDocumentFactory documentFactory, IExportTask exportTask)
+            : this(documentFactory, exportTask, () => DateTime.Now)
         {
         }
 
-        internal FileStreamExporter(IDocumentFactory documentFactory, IExportTask task, Func<DateTime> nowFactory)
+        internal FileStreamExporter(IDocumentFactory documentFactory, IExportTask exportTask, Func<DateTime> nowFactory)
         {
             _documentFactory = documentFactory ?? throw new ArgumentNullException(nameof(documentFactory));
-            _task = task ?? throw new ArgumentNullException(nameof(task));
+            _exportTask = exportTask ?? throw new ArgumentNullException(nameof(exportTask));
             _nowFactory = nowFactory ?? throw new ArgumentNullException(nameof(nowFactory));
         }
 
@@ -53,7 +53,7 @@ namespace Exportr
         /// <returns>The proposed filename.</returns>
         public string GetFileName()
         {
-            var name = _task.Name;
+            var name = _exportTask.Name;
             if (string.IsNullOrEmpty(name)) throw new InvalidOperationException("Failed to get the name of the export task");
             var extension = _documentFactory.FileExtension ?? string.Empty;
             if (extension.Any() && !extension.StartsWith(".")) extension = $".{extension}";
@@ -67,7 +67,7 @@ namespace Exportr
         public void ExportToStream(Stream stream)
         {
             using var document = _documentFactory.CreateDocument(stream);
-            foreach (var sheetTask in _task.EnumSheetExportTasks())
+            foreach (var sheetTask in _exportTask.EnumSheetExportTasks())
             {
                 using var sheet = document.CreateSheet(sheetTask.Name);
                 sheet.AddHeaderRow(sheetTask.GetColumnLabels());
