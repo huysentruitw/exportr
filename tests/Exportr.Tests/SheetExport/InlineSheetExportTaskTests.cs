@@ -69,28 +69,12 @@ namespace Exportr.Tests.SheetExport
             });
 
             var columns = task.GetColumnLabels();
-            Assert.That(columns, Has.Length.EqualTo(5));
-            Assert.That(columns[0], Is.EqualTo("Title"));
-            Assert.That(columns[1], Is.EqualTo("Description"));
-            Assert.That(columns[2], Is.EqualTo("OrderC"));
-            Assert.That(columns[3], Is.EqualTo("OrderA"));
-            Assert.That(columns[4], Is.EqualTo("OrderB"));
+            Assert.That(columns, Is.EquivalentTo(new object[] { "Title", "Description", "OrderC", "OrderA", "OrderB" }));
 
             var data = task.EnumRowData().ToArray();
             Assert.That(data, Has.Length.EqualTo(2));
-            Assert.That(data[0], Has.Length.EqualTo(5));
-            Assert.That(data[0][0], Is.EqualTo("Title1"));
-            Assert.That(data[0][1], Is.EqualTo("DescriptionA"));
-            Assert.That(data[0][2], Is.EqualTo("cc"));
-            Assert.That(data[0][3], Is.EqualTo("aa"));
-            Assert.That(data[0][4], Is.EqualTo("bb"));
-
-            Assert.That(data[1], Has.Length.EqualTo(5));
-            Assert.That(data[1][0], Is.EqualTo("Title2"));
-            Assert.That(data[1][1], Is.EqualTo("DescriptionB"));
-            Assert.That(data[1][2], Is.EqualTo("cc"));
-            Assert.That(data[1][3], Is.EqualTo("aa"));
-            Assert.That(data[1][4], Is.EqualTo("bb"));
+            Assert.That(data[0], Is.EquivalentTo(new object[] { "Title1", "DescriptionA", "cc", "aa", "bb" }));
+            Assert.That(data[1], Is.EquivalentTo(new object[] { "Title2", "DescriptionB", "cc", "aa", "bb" }));
         }
 
         [Test]
@@ -114,34 +98,12 @@ namespace Exportr.Tests.SheetExport
             }, new[] { "Additional1", "Additional2" });
 
             var columns = task.GetColumnLabels();
-            Assert.That(columns, Has.Length.EqualTo(7));
-            Assert.That(columns[0], Is.EqualTo("Title"));
-            Assert.That(columns[1], Is.EqualTo("Description"));
-            Assert.That(columns[2], Is.EqualTo("OrderC"));
-            Assert.That(columns[3], Is.EqualTo("OrderA"));
-            Assert.That(columns[4], Is.EqualTo("OrderB"));
-            Assert.That(columns[5], Is.EqualTo("Additional1"));
-            Assert.That(columns[6], Is.EqualTo("Additional2"));
+            Assert.That(columns, Is.EquivalentTo(new object[] { "Title", "Description", "OrderC", "OrderA", "OrderB", "Additional1", "Additional2" }));
 
             var data = task.EnumRowData().ToArray();
             Assert.That(data, Has.Length.EqualTo(2));
-            Assert.That(data[0], Has.Length.EqualTo(7));
-            Assert.That(data[0][0], Is.EqualTo("Title1"));
-            Assert.That(data[0][1], Is.EqualTo("DescriptionA"));
-            Assert.That(data[0][2], Is.EqualTo("cc"));
-            Assert.That(data[0][3], Is.EqualTo("aa"));
-            Assert.That(data[0][4], Is.EqualTo("bb"));
-            Assert.That(data[0][5], Is.EqualTo(true));
-            Assert.That(data[0][6], Is.EqualTo(1));
-
-            Assert.That(data[1], Has.Length.EqualTo(7));
-            Assert.That(data[1][0], Is.EqualTo("Title2"));
-            Assert.That(data[1][1], Is.EqualTo("DescriptionB"));
-            Assert.That(data[1][2], Is.EqualTo("cc"));
-            Assert.That(data[1][3], Is.EqualTo("aa"));
-            Assert.That(data[1][4], Is.EqualTo("bb"));
-            Assert.That(data[1][5], Is.EqualTo(true));
-            Assert.That(data[1][6], Is.EqualTo(1));
+            Assert.That(data[0], Is.EquivalentTo(new object[] { "Title1", "DescriptionA", "cc", "aa", "bb", true, 1 }));
+            Assert.That(data[1], Is.EquivalentTo(new object[] { "Title2", "DescriptionB", "cc", "aa", "bb", true, 1 }));
         }
 
         [Test]
@@ -165,34 +127,12 @@ namespace Exportr.Tests.SheetExport
             }, new[] { "OrderA", "OrderB" });
 
             var columns = task.GetColumnLabels();
-            Assert.That(columns, Has.Length.EqualTo(7));
-            Assert.That(columns[0], Is.EqualTo("Title"));
-            Assert.That(columns[1], Is.EqualTo("Description"));
-            Assert.That(columns[2], Is.EqualTo("OrderC"));
-            Assert.That(columns[3], Is.EqualTo("OrderA"));
-            Assert.That(columns[4], Is.EqualTo("OrderB"));
-            Assert.That(columns[5], Is.EqualTo("OrderA"));
-            Assert.That(columns[6], Is.EqualTo("OrderB"));
+            Assert.That(columns, Is.EquivalentTo(new object[] { "Title", "Description", "OrderC", "OrderA", "OrderB", "OrderA", "OrderB" }));
 
             var data = task.EnumRowData().ToArray();
             Assert.That(data, Has.Length.EqualTo(2));
-            Assert.That(data[0], Has.Length.EqualTo(7));
-            Assert.That(data[0][0], Is.EqualTo("Title1"));
-            Assert.That(data[0][1], Is.EqualTo("DescriptionA"));
-            Assert.That(data[0][2], Is.EqualTo("cc"));
-            Assert.That(data[0][3], Is.EqualTo("aa"));
-            Assert.That(data[0][4], Is.EqualTo("bb"));
-            Assert.That(data[0][5], Is.EqualTo(true));
-            Assert.That(data[0][6], Is.EqualTo(1));
-
-            Assert.That(data[1], Has.Length.EqualTo(7));
-            Assert.That(data[1][0], Is.EqualTo("Title2"));
-            Assert.That(data[1][1], Is.EqualTo("DescriptionB"));
-            Assert.That(data[1][2], Is.EqualTo("cc"));
-            Assert.That(data[1][3], Is.EqualTo("aa"));
-            Assert.That(data[1][4], Is.EqualTo("bb"));
-            Assert.That(data[1][5], Is.EqualTo(true));
-            Assert.That(data[1][6], Is.EqualTo(1));
+            Assert.That(data[0], Is.EquivalentTo(new object[] { "Title1", "DescriptionA", "cc", "aa", "bb", true, 1 }));
+            Assert.That(data[1], Is.EquivalentTo(new object[] { "Title2", "DescriptionB", "cc", "aa", "bb", true, 1 }));
         }
 
         [Test]
@@ -216,34 +156,12 @@ namespace Exportr.Tests.SheetExport
             }, new[] { "OrderA", "OrderB" });
 
             var columns = task.GetColumnLabels();
-            Assert.That(columns, Has.Length.EqualTo(7));
-            Assert.That(columns[0], Is.EqualTo("Title"));
-            Assert.That(columns[1], Is.EqualTo("Description"));
-            Assert.That(columns[2], Is.EqualTo("OrderC"));
-            Assert.That(columns[3], Is.EqualTo("OrderA"));
-            Assert.That(columns[4], Is.EqualTo("OrderB"));
-            Assert.That(columns[5], Is.EqualTo("OrderA"));
-            Assert.That(columns[6], Is.EqualTo("OrderB"));
+            Assert.That(columns, Is.EquivalentTo(new object[] { "Title", "Description", "OrderC", "OrderA", "OrderB", "OrderA", "OrderB" }));
 
             var data = task.EnumRowData().ToArray();
             Assert.That(data, Has.Length.EqualTo(2));
-            Assert.That(data[0], Has.Length.EqualTo(7));
-            Assert.That(data[0][0], Is.EqualTo("Title1"));
-            Assert.That(data[0][1], Is.EqualTo("DescriptionA"));
-            Assert.That(data[0][2], Is.EqualTo("cc"));
-            Assert.That(data[0][3], Is.EqualTo("aa"));
-            Assert.That(data[0][4], Is.EqualTo("aa"));
-            Assert.That(data[0][5], Is.EqualTo("cc"));
-            Assert.That(data[0][6], Is.EqualTo("aa"));
-
-            Assert.That(data[1], Has.Length.EqualTo(7));
-            Assert.That(data[1][0], Is.EqualTo("Title2"));
-            Assert.That(data[1][1], Is.EqualTo("DescriptionB"));
-            Assert.That(data[1][2], Is.EqualTo("cc"));
-            Assert.That(data[1][3], Is.EqualTo("aa"));
-            Assert.That(data[1][4], Is.EqualTo("aa"));
-            Assert.That(data[1][5], Is.EqualTo("cc"));
-            Assert.That(data[1][6], Is.EqualTo("aa"));
+            Assert.That(data[0], Is.EquivalentTo(new object[] { "Title1", "DescriptionA", "cc", "aa", "aa", "cc", "aa" }));
+            Assert.That(data[1], Is.EquivalentTo(new object[] { "Title2", "DescriptionB", "cc", "aa", "aa", "cc", "aa" }));
         }
 
         private class SomeEntityModel

@@ -37,7 +37,7 @@ namespace Exportr
         /// <summary>
         /// Enumerates the row data.
         /// </summary>
-        /// <returns>Row data.</returns>
-        IEnumerable<object[]> EnumRowData();
+        /// <returns>Row data: an <see cref="IEnumerable{T}"/> per row that contains the cell values for that row.</returns>
+        IEnumerable<IEnumerable<object>> EnumRowData();
     }
 }

@@ -110,7 +110,7 @@ namespace Exportr.SheetExport
         /// Gets the row data of the sheet.
         /// </summary>
         /// <returns>The row data of the sheet.</returns>
-        public IEnumerable<object[]> EnumRowData()
+        public IEnumerable<IEnumerable<object>> EnumRowData()
             => _fetchEntities()
                 .SelectMany(entity =>
                 {
@@ -120,8 +120,7 @@ namespace Exportr.SheetExport
                         var additionalValues = rowData.AdditionalValues ?? Enumerable.Empty<object>();
                         return _orderedColumnInfos
                             .Select(columnInfo => columnInfo.PropertyInfo.GetValue(rowData))
-                            .Concat(additionalValues)
-                            .ToArray();
+                            .Concat(additionalValues);
                     });
                 });
 

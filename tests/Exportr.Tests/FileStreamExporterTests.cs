@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 
@@ -76,7 +78,7 @@ namespace Exportr.Tests
         {
             var stream = new MemoryStream();
             var columnLabels = new[] { "col1", "col2", "col3" };
-            var rowData = new[]
+            IEnumerable<IEnumerable<object>> rowData = new[]
             {
                 new object[] { true, 1, "r1" },
                 new object[] { false, 2, "r2" }
@@ -102,8 +104,8 @@ namespace Exportr.Tests
             sheetExportTaskMock.Verify(x => x.GetColumnLabels(), Times.Once);
             sheetMock.Verify(x => x.AddHeaderRow(columnLabels), Times.Once);
             sheetMock.Verify(x => x.AddRow(It.IsAny<object[]>()), Times.Exactly(2));
-            sheetMock.Verify(x => x.AddRow(rowData[0]), Times.Exactly(1));
-            sheetMock.Verify(x => x.AddRow(rowData[1]), Times.Exactly(1));
+            sheetMock.Verify(x => x.AddRow(rowData.First()), Times.Exactly(1));
+            sheetMock.Verify(x => x.AddRow(rowData.Last()), Times.Exactly(1));
         }
     }
 }

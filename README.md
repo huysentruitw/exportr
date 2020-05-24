@@ -90,7 +90,7 @@ public class BookSheetExportTask : ISheetExportTask
 
     public string[] GetColumnLabels() => new[] { "Id", "Author", "Title" };
 
-    public IEnumerable<object[]> EnumRowData()
+    public IEnumerable<IEnumerable<object>> EnumRowData()
     {
         foreach (var book in Library.GetAllBooks())
         {

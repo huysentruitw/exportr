@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -71,7 +72,7 @@ namespace Exportr
                 using var sheet = document.CreateSheet(sheetTask.Name);
                 sheet.AddHeaderRow(sheetTask.GetColumnLabels());
 
-                foreach (var rowData in sheetTask.EnumRowData())
+                foreach (IEnumerable<object> rowData in sheetTask.EnumRowData())
                 {
                     sheet.AddRow(rowData);
                 }
