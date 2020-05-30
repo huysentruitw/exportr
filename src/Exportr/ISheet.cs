@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace Exportr
 {
@@ -33,6 +34,6 @@ namespace Exportr
         /// Adds a new row to the sheet.
         /// </summary>
         /// <param name="values">The values of the cells for the new row.</param>
-        void AddRow(params object[] values);
+        void AddRow(IEnumerable<object> values);
     }
 }

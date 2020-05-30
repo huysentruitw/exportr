@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
@@ -54,7 +55,7 @@ namespace Exportr.OpenXml
             _writer.WriteElement(row);
         }
 
-        public void AddRow(params object[] values)
+        public void AddRow(IEnumerable<object> values)
         {
             var row = new Row(values.Select(_valueConverter.Convert));
             _writer.WriteElement(row);
