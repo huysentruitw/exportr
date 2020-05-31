@@ -1,14 +1,17 @@
 ﻿namespace Exportr
 {
+    public static class Formula
+    {
+        public static Formula<T> Create<T>(string expression)
+            => new Formula<T>(expression);
+    }
+
     public sealed class Formula<TCell> : IFormula
     {
-        private Formula(string expression)
+        internal Formula(string expression)
         {
             Expression = expression;
         }
-
-        public static Formula<T> Create<T>(string expression)
-            => new Formula<T>(expression);
 
         public string Expression { get; }
 
