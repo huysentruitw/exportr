@@ -29,8 +29,8 @@ namespace Exportr.SheetExport
     public class InlineSheetExportTask<TEntity, TRowData> : ISheetExportTask
         where TRowData : RowData
     {
-        private readonly Func<IEnumerable<TEntity>> _fetchEntities;
-        private readonly Func<TEntity, IEnumerable<TRowData>> _parseEntity;
+        private readonly Func<IAsyncEnumerable<TEntity>> _fetchEntities;
+        private readonly Func<TEntity, IAsyncEnumerable<TRowData>> _parseEntity;
         private readonly IEnumerable<string> _additionalColumnNames;
         private readonly ColumnInfo[] _orderedColumnInfos;
 
@@ -44,12 +44,19 @@ namespace Exportr.SheetExport
         /// <returns>A <see cref="InlineSheetExportTask{TEntity,TRowData}"/> instance.</returns>
         public static InlineSheetExportTask<TEntity, TRowData> SingleParse(
             string name,
-            Func<IEnumerable<TEntity>> fetchEntities,
+            Func<IAsyncEnumerable<TEntity>> fetchEntities,
             Func<TEntity, TRowData> parseEntity,
             IEnumerable<string> additionalColumnNames = null)
         {
             if (parseEntity == null) throw new ArgumentNullException(nameof(parseEntity));
-            return new InlineSheetExportTask<TEntity, TRowData>(name, fetchEntities, x => new[] { parseEntity(x) }, additionalColumnNames);
+            return new InlineSheetExportTask<TEntity, TRowData>(name, fetchEntities, x => ToAsyncEnumerable(parseEntity(x)), additionalColumnNames);
+        }
+
+#pragma warning disable 1998
+        private static async IAsyncEnumerable<T> ToAsyncEnumerable<T>(T entity)
+#pragma warning restore 1998
+        {
+            yield return entity;
         }
 
         /// <summary>
@@ -62,15 +69,15 @@ namespace Exportr.SheetExport
         /// <returns>A <see cref="InlineSheetExportTask{TEntity,TRowData}"/> instance.</returns>
         public static InlineSheetExportTask<TEntity, TRowData> MultiParse(
             string name,
-            Func<IEnumerable<TEntity>> fetchEntities,
-            Func<TEntity, IEnumerable<TRowData>> parseEntity,
+            Func<IAsyncEnumerable<TEntity>> fetchEntities,
+            Func<TEntity, IAsyncEnumerable<TRowData>> parseEntity,
             IEnumerable<string> additionalColumnNames = null)
             => new InlineSheetExportTask<TEntity, TRowData>(name, fetchEntities, parseEntity, additionalColumnNames);
 
         private InlineSheetExportTask(
             string name,
-            Func<IEnumerable<TEntity>> fetchEntities,
-            Func<TEntity, IEnumerable<TRowData>> parseEntity,
+            Func<IAsyncEnumerable<TEntity>> fetchEntities,
+            Func<TEntity, IAsyncEnumerable<TRowData>> parseEntity,
             IEnumerable<string> additionalColumnNames = null)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
@@ -110,19 +117,19 @@ namespace Exportr.SheetExport
         /// Gets the row data of the sheet.
         /// </summary>
         /// <returns>The row data of the sheet.</returns>
-        public IEnumerable<IEnumerable<object>> EnumRowData()
-            => _fetchEntities()
-                .SelectMany(entity =>
+        public async IAsyncEnumerable<IEnumerable<object>> EnumRowData()
+        {
+            await foreach (var entity in _fetchEntities())
+            {
+                await foreach (var rowData in _parseEntity(entity))
                 {
-                    var rowDatas = _parseEntity(entity);
-                    return rowDatas.Select(rowData =>
-                    {
-                        var additionalValues = rowData.AdditionalValues ?? Enumerable.Empty<object>();
-                        return _orderedColumnInfos
-                            .Select(columnInfo => columnInfo.PropertyInfo.GetValue(rowData))
-                            .Concat(additionalValues);
-                    });
-                });
+                    var additionalValues = rowData.AdditionalValues ?? Enumerable.Empty<object>();
+                    yield return _orderedColumnInfos
+                        .Select(columnInfo => columnInfo.PropertyInfo.GetValue(rowData))
+                        .Concat(additionalValues);
+                }
+            }
+        }
 
         private class ColumnInfo
         {

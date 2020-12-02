@@ -15,6 +15,7 @@
  */
 
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Exportr
 {
@@ -33,6 +34,6 @@ namespace Exportr
         /// Exports the export data to the given stream.
         /// </summary>
         /// <param name="stream">The stream to write the export to.</param>
-        void ExportToStream(Stream stream);
+        Task ExportToStream(Stream stream);
     }
 }

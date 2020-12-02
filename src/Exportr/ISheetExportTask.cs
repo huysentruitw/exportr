@@ -38,6 +38,6 @@ namespace Exportr
         /// Enumerates the row data.
         /// </summary>
         /// <returns>Row data: an <see cref="IEnumerable{T}"/> per row that contains the cell values for that row.</returns>
-        IEnumerable<IEnumerable<object>> EnumRowData();
+        IAsyncEnumerable<IEnumerable<object>> EnumRowData();
     }
 }

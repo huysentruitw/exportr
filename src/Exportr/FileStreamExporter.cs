@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Exportr
 {
@@ -64,7 +65,7 @@ namespace Exportr
         /// Exports the export data to the given stream.
         /// </summary>
         /// <param name="stream">The stream to write the export to.</param>
-        public void ExportToStream(Stream stream)
+        public async Task ExportToStream(Stream stream)
         {
             using var document = _documentFactory.CreateDocument(stream);
             foreach (var sheetTask in _exportTask.EnumSheetExportTasks())
@@ -72,7 +73,7 @@ namespace Exportr
                 using var sheet = document.CreateSheet(sheetTask.Name);
                 sheet.AddHeaderRow(sheetTask.GetColumnLabels());
 
-                foreach (IEnumerable<object> rowData in sheetTask.EnumRowData())
+                await foreach (IEnumerable<object> rowData in sheetTask.EnumRowData())
                 {
                     sheet.AddRow(rowData);
                 }
