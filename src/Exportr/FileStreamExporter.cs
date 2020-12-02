@@ -68,7 +68,7 @@ namespace Exportr
         public async Task ExportToStream(Stream stream)
         {
             using var document = _documentFactory.CreateDocument(stream);
-            foreach (var sheetTask in _exportTask.EnumSheetExportTasks())
+            await foreach (var sheetTask in _exportTask.EnumSheetExportTasks())
             {
                 using var sheet = document.CreateSheet(sheetTask.Name);
                 sheet.AddHeaderRow(await sheetTask.GetColumnLabels());

@@ -84,6 +84,14 @@ namespace Exportr.Tests
                 new object[] { false, 2, "r2" }
             };
 
+            var sheetExportTaskMock = new Mock<ISheetExportTask>();
+#pragma warning disable 1998
+            async IAsyncEnumerable<ISheetExportTask> SheetExportTasks()
+#pragma warning restore 1998
+            {
+                yield return sheetExportTaskMock.Object;
+            }
+
 #pragma warning disable 1998
             async IAsyncEnumerable<IEnumerable<object>> RowData()
 #pragma warning restore 1998
@@ -93,15 +101,14 @@ namespace Exportr.Tests
             }
 
             var documentMock = new Mock<IDocument>();
-            var sheetExportTaskMock = new Mock<ISheetExportTask>();
             var sheetMock = new Mock<ISheet>();
             _documentFactoryMock.SetupGet(x => x.FileExtension).Returns("xlsx");
             _documentFactoryMock.Setup(x => x.CreateDocument(stream)).Returns(documentMock.Object);
-            _exportTaskMock.Setup(x => x.EnumSheetExportTasks()).Returns(new[] { sheetExportTaskMock.Object });
+            _exportTaskMock.Setup(x => x.EnumSheetExportTasks()).Returns(SheetExportTasks);
             documentMock.Setup(x => x.CreateSheet("MySheet A")).Returns(sheetMock.Object);
             sheetExportTaskMock.SetupGet(x => x.Name).Returns("MySheet A");
             sheetExportTaskMock.Setup(x => x.GetColumnLabels()).ReturnsAsync(columnLabels);
-            sheetExportTaskMock.Setup(x => x.EnumRowData()).Returns(RowData());
+            sheetExportTaskMock.Setup(x => x.EnumRowData()).Returns(RowData);
 
             var exporter = new FileStreamExporter(_documentFactoryMock.Object, _exportTaskMock.Object);
             exporter.ExportToStream(stream);

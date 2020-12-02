@@ -32,6 +32,6 @@ namespace Exportr
         /// Enumerates all available sheet export tasks for the current export task.
         /// </summary>
         /// <returns>Enumeration of sheet export tasks</returns>
-        IEnumerable<ISheetExportTask> EnumSheetExportTasks();
+        IAsyncEnumerable<ISheetExportTask> EnumSheetExportTasks();
     }
 }
