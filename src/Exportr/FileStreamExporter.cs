@@ -71,7 +71,7 @@ namespace Exportr
             foreach (var sheetTask in _exportTask.EnumSheetExportTasks())
             {
                 using var sheet = document.CreateSheet(sheetTask.Name);
-                sheet.AddHeaderRow(sheetTask.GetColumnLabels());
+                sheet.AddHeaderRow(await sheetTask.GetColumnLabels());
 
                 await foreach (IEnumerable<object> rowData in sheetTask.EnumRowData())
                 {

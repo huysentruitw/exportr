@@ -15,6 +15,7 @@
  */
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Exportr
 {
@@ -32,7 +33,7 @@ namespace Exportr
         /// Gets the column labels for the header row.
         /// </summary>
         /// <returns>The column labels.</returns>
-        string[] GetColumnLabels();
+        Task<string[]> GetColumnLabels();
 
         /// <summary>
         /// Enumerates the row data.

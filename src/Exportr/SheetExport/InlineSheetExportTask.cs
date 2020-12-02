@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Exportr.SheetExport
 {
@@ -111,7 +112,7 @@ namespace Exportr.SheetExport
         /// Gets the column labels of the sheet.
         /// </summary>
         /// <returns>The column labels of the sheet.</returns>
-        public string[] GetColumnLabels() => _orderedColumnInfos.Select(x => x.Name).Concat(_additionalColumnNames).ToArray();
+        public Task<string[]> GetColumnLabels() => Task.FromResult(_orderedColumnInfos.Select(x => x.Name).Concat(_additionalColumnNames).ToArray());
 
         /// <summary>
         /// Gets the row data of the sheet.

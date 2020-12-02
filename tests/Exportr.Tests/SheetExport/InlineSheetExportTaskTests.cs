@@ -78,7 +78,7 @@ namespace Exportr.Tests.SheetExport
 
             var task = InlineSheetExportTask<SomeEntityModel, SomeRowData>.MultiParse("SomeName", Fetch, Parse);
 
-            var columns = task.GetColumnLabels();
+            var columns = await task.GetColumnLabels();
             Assert.That(columns, Is.EquivalentTo(new object[] { "Title", "Description", "OrderC", "OrderA", "OrderB" }));
 
             var data = await ToArray(task.EnumRowData());
@@ -115,7 +115,7 @@ namespace Exportr.Tests.SheetExport
 
             var task = InlineSheetExportTask<SomeEntityModel, SomeRowData>.MultiParse("SomeName", Fetch, Parse, new[] { "Additional1", "Additional2" });
 
-            var columns = task.GetColumnLabels();
+            var columns = await task.GetColumnLabels();
             Assert.That(columns, Is.EquivalentTo(new object[] { "Title", "Description", "OrderC", "OrderA", "OrderB", "Additional1", "Additional2" }));
 
             var data = await ToArray(task.EnumRowData());
@@ -152,7 +152,7 @@ namespace Exportr.Tests.SheetExport
 
             var task = InlineSheetExportTask<SomeEntityModel, SomeRowData>.MultiParse("SomeName", Fetch, Parse, new[] { "OrderA", "OrderB" });
 
-            var columns = task.GetColumnLabels();
+            var columns = await task.GetColumnLabels();
             Assert.That(columns, Is.EquivalentTo(new object[] { "Title", "Description", "OrderC", "OrderA", "OrderB", "OrderA", "OrderB" }));
 
             var data = await ToArray(task.EnumRowData());
@@ -189,7 +189,7 @@ namespace Exportr.Tests.SheetExport
 
             var task = InlineSheetExportTask<SomeEntityModel, SomeRowData>.MultiParse("SomeName", Fetch, Parse, new[] { "OrderA", "OrderB" });
 
-            var columns = task.GetColumnLabels();
+            var columns = await task.GetColumnLabels();
             Assert.That(columns, Is.EquivalentTo(new object[] { "Title", "Description", "OrderC", "OrderA", "OrderB", "OrderA", "OrderB" }));
 
             var data = await ToArray(task.EnumRowData());

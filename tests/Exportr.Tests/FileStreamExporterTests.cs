@@ -100,7 +100,7 @@ namespace Exportr.Tests
             _exportTaskMock.Setup(x => x.EnumSheetExportTasks()).Returns(new[] { sheetExportTaskMock.Object });
             documentMock.Setup(x => x.CreateSheet("MySheet A")).Returns(sheetMock.Object);
             sheetExportTaskMock.SetupGet(x => x.Name).Returns("MySheet A");
-            sheetExportTaskMock.Setup(x => x.GetColumnLabels()).Returns(columnLabels);
+            sheetExportTaskMock.Setup(x => x.GetColumnLabels()).ReturnsAsync(columnLabels);
             sheetExportTaskMock.Setup(x => x.EnumRowData()).Returns(RowData());
 
             var exporter = new FileStreamExporter(_documentFactoryMock.Object, _exportTaskMock.Object);
