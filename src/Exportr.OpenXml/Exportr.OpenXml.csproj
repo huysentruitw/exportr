@@ -6,7 +6,7 @@
     <Authors>Wouter Huysentruit</Authors>
     <Company>Huysentruit</Company>
     <Product>Exportr</Product>
-    <Copyright>Copyright © 2020 Wouter Huysentruit</Copyright>
+    <Copyright>Copyright © 2021 Wouter Huysentruit</Copyright>
     <AssemblyName>Exportr.OpenXml</AssemblyName>
     <PackageId>Exportr.OpenXml</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
@@ -27,7 +27,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.11.3" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.12.1" />
   </ItemGroup>
 
   <ItemGroup>
