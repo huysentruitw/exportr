@@ -15,6 +15,7 @@
  */
 
 using System;
+using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Exportr.OpenXml
@@ -97,7 +98,13 @@ namespace Exportr.OpenXml
             // Excel has a limit of 32767 characters per cell.
             // See https://support.office.com/en-sg/article/Excel-specifications-and-limits-16c69c74-3d6a-4aaf-ba35-e6eb276e8eaa
             var inlineString = new InlineString();
-            inlineString.AppendChild(new Text { Text = value.Substring(0, Math.Min(value.Length, 32764)) });
+            var text = new Text { Text = value.Substring(0, Math.Min(value.Length, 32764)) };
+
+            if (text.Text.Trim().Length != text.Text.Length)
+                text.Space = SpaceProcessingModeValues.Preserve;
+
+            inlineString.AppendChild(text);
+
             cell.AppendChild(inlineString);
             return cell;
         }
